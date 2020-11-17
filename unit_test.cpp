@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include <iostream>
 #include "base.hpp"
 #include "div.h"
 #include "pow.h"
@@ -7,7 +8,9 @@
 #include "sub.h"
 #include "rand.h"
 #include "mult.h"
-
+#include "VectorContainer.h"
+#include "container.hpp"
+#include "sort.hpp"
 #include "op_test.hpp"
 Base* zero = new Op(0);
 Base* ten = new Op(10);
@@ -91,6 +94,50 @@ TEST(randTest, returnsnum)
 	EXPECT_EQ(test, true);
 
 }
+TEST(VectorContainerTest, Add_Element_Test){
+	Op* seven = new Op(7);
+	VectorContainer* container = new VectorContainer();
+	container->add_element(seven);
+
+	ASSERT_EQ(container->size(),1);
+	EXPECT_EQ(container->at(0)->evaluate(),7);
+}
+/*TEST(VectorContainerTest, SwapTest){
+	Op* three = new Op(3);
+	Op* eight = new Op(8);
+	VectorContainer* container = new VectorContainer();
+	container->add_element(three);
+	container->add_element(eight);	
+        ASSERT_EQ(container->size(),2);
+	EXPECT_EQ(container->at(0)->evaluate(),3);
+	EXPECT_EQ(container->at(1)->evaluate(),8);
+
+	container->swap(container->at(0)->evaluate(),container->at(1)->evaluate());
+	
+	ASSERT_EQ(container->size(),1);	
+        EXPECT_EQ(container->at(0)->evaluate(),8);
+        EXPECT_EQ(container->at(1)->evaluate(),3);
+
+
+}*/
+TEST(VectorContainerTest, VectorSize){
+	Op* seven = new Op(7);
+	Op* five = new Op(5);
+	Op* three = new Op(3);
+	Op* six = new Op(6);
+	Op* two = new Op(2);
+	VectorContainer* container = new VectorContainer();
+	container->add_element(seven);
+	container->add_element(five);
+	container->add_element(three);
+	container->add_element(six);
+	container->add_element(two);
+	
+	ASSERT_EQ(container->size(),5);
+	EXPECT_EQ(container->size(),5);
+
+}
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
