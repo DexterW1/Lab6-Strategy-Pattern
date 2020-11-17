@@ -102,7 +102,7 @@ TEST(VectorContainerTest, Add_Element_Test){
 	ASSERT_EQ(container->size(),1);
 	EXPECT_EQ(container->at(0)->evaluate(),7);
 }
-/*TEST(VectorContainerTest, SwapTest){
+TEST(VectorContainerTest, SwapTest){
 	Op* three = new Op(3);
 	Op* eight = new Op(8);
 	VectorContainer* container = new VectorContainer();
@@ -112,14 +112,14 @@ TEST(VectorContainerTest, Add_Element_Test){
 	EXPECT_EQ(container->at(0)->evaluate(),3);
 	EXPECT_EQ(container->at(1)->evaluate(),8);
 
-	container->swap(container->at(0)->evaluate(),container->at(1)->evaluate());
+	container->swap(0,1);
 	
-	ASSERT_EQ(container->size(),1);	
+	ASSERT_EQ(container->size(),2);	
         EXPECT_EQ(container->at(0)->evaluate(),8);
         EXPECT_EQ(container->at(1)->evaluate(),3);
 
 
-}*/
+}
 TEST(VectorContainerTest, VectorSize){
 	Op* seven = new Op(7);
 	Op* five = new Op(5);
