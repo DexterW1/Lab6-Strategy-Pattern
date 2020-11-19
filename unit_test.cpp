@@ -12,88 +12,7 @@
 #include "container.hpp"
 #include "sort.hpp"
 #include "op_test.hpp"
-Base* zero = new Op(0);
-Base* ten = new Op(10);
-Base* two = new Op(2);
-Base* three = new Op(3);
-Base* four = new Op(4);
-Base* five = new Op(5);
-
-TEST(divTest, divideby0) {
-	Base* div = new Div(ten, zero);
-	EXPECT_EQ(div->evaluate(), 0);
-
-}
-
-TEST(divTest, divideby2) {
-        Base* div = new Div(ten, two);
-        EXPECT_EQ(div->evaluate(), 5);
-
-}
-
-TEST(divTest, dividestringify) {
-        Base* div = new Div(ten, two);
-        EXPECT_EQ(div->stringify(), "(10.000000)/(2.000000)");
-
-}
-
-
-
-
-TEST(multTest, multby0)
-{
-	Base* mult = new Mult(ten, zero);
-	EXPECT_EQ(mult->evaluate(), 0);
-
-}
-TEST(multTest, multstringify)
-{
-	Base* mult = new Mult(ten, zero);
-	EXPECT_EQ(mult->stringify(), "(10.000000)*(0.000000)");
-
-}
-TEST(addTest, add0)
-{
-	Base* add = new Add(ten, zero);
-	EXPECT_EQ(add->evaluate(), 10);
-}
-TEST(addTest, addstringify)
-{
-        Base* add = new Add(ten, zero);
-        EXPECT_EQ(add->stringify(), "(10.000000)+(0.000000)");
-}
-TEST(subTest, sub0)
-{
-	Base* sub = new Sub(ten, zero);
-        EXPECT_EQ(sub->evaluate(), 10);	
-}
-TEST(subTest, substringify)
-{
-        Base* add = new Sub(ten, zero);
-        EXPECT_EQ(add->stringify(), "(10.000000)-(0.000000)");
-}
-TEST(powTest, pow4squared)
-{
-	Base* pow = new Pow(four, two);
-	EXPECT_EQ(pow->evaluate(), 16);
-
-}
-TEST(powTest, powstringify)
-{
-	Base* pow = new Pow(four, five);
-	EXPECT_EQ(pow->stringify(), "(4.000000)^(5.000000)");
-}
-TEST(randTest, returnsnum)
-{
-	Base* rand = new Rand();
-	bool test = false;
-	if(rand->evaluate() >= 0 && rand->evaluate() <= 100)
-	{
-		test = true;
-	}
-	EXPECT_EQ(test, true);
-
-}
+#include "selection_sort.h"
 TEST(VectorContainerTest, Add_Element_Test){
 	Op* seven = new Op(7);
 	VectorContainer* container = new VectorContainer();
@@ -101,6 +20,25 @@ TEST(VectorContainerTest, Add_Element_Test){
 
 	ASSERT_EQ(container->size(),1);
 	EXPECT_EQ(container->at(0)->evaluate(),7);
+}
+TEST(VectorContainerTest, Add_Multiple_Elements_Test){
+	Op* twenty = new Op(20);
+	Op* hundered = new Op(100);
+	Op* three = new Op(3);
+	Op* ten = new Op(10);
+
+	VectorContainer* container = new VectorContainer();
+
+	container->add_element(twenty);
+	container->add_element(hundered);
+	container->add_element(three);
+	container->add_element(ten);
+
+	ASSERT_EQ(container->size(),4);
+	EXPECT_EQ(container->at(0)->evaluate(),20);
+	EXPECT_EQ(container->at(1)->evaluate(),100);
+	EXPECT_EQ(container->at(2)->evaluate(),3);
+	EXPECT_EQ(container->at(3)->evaluate(),10);
 }
 TEST(VectorContainerTest, SwapTest){
 	Op* three = new Op(3);
@@ -120,6 +58,47 @@ TEST(VectorContainerTest, SwapTest){
 
 
 }
+TEST(VectorContainerTest, SwapTestPt2){
+        Op* three = new Op(3);
+        Op* eight = new Op(8);
+	Op* five = new Op(5);
+	Op* ten = new  Op(10);
+	Op* two = new Op(2);
+	Op* one = new Op(1);
+        VectorContainer* container = new VectorContainer();
+        container->add_element(three);
+        container->add_element(eight);
+	container->add_element(five);
+	container->add_element(ten);
+	container->add_element(two);
+	container->add_element(one);
+        ASSERT_EQ(container->size(),6);
+
+        EXPECT_EQ(container->at(0)->evaluate(),3);
+        EXPECT_EQ(container->at(1)->evaluate(),8);
+        EXPECT_EQ(container->at(2)->evaluate(),5);
+        EXPECT_EQ(container->at(3)->evaluate(),10);
+        EXPECT_EQ(container->at(4)->evaluate(),2);
+        EXPECT_EQ(container->at(5)->evaluate(),1);
+
+        container->swap(0,5);
+	container->swap(1,4);
+	container->swap(2,3);
+
+        ASSERT_EQ(container->size(),6);
+        EXPECT_EQ(container->at(0)->evaluate(),1);
+        EXPECT_EQ(container->at(1)->evaluate(),2);
+        EXPECT_EQ(container->at(2)->evaluate(),10);
+        EXPECT_EQ(container->at(3)->evaluate(),5);
+        EXPECT_EQ(container->at(4)->evaluate(),8);
+        EXPECT_EQ(container->at(5)->evaluate(),3);
+
+
+}
+
+
+
+
 TEST(VectorContainerTest, VectorSize){
 	Op* seven = new Op(7);
 	Op* five = new Op(5);
@@ -137,6 +116,198 @@ TEST(VectorContainerTest, VectorSize){
 	EXPECT_EQ(container->size(),5);
 
 }
+TEST(VectorContainerTest, SelectionSort){
+	Op* seven = new Op(7);
+	Op* four = new Op(4);
+   	 Mult* TreeA = new Mult(seven, four);
+
+    	Op* three = new Op(3);
+   	Op* two = new Op(2);
+    	Add* TreeB = new Add(three, two);
+
+    	Op* ten = new Op(10);
+    	Op* six = new Op(6);
+    	Sub* TreeC = new Sub(ten, six);
+
+    	VectorContainer* container = new VectorContainer();
+    	container->add_element(TreeA);
+    	container->add_element(TreeB);
+    	container->add_element(TreeC);
+
+    	ASSERT_EQ(container->size(), 3);
+    	EXPECT_EQ(container->at(0)->evaluate(), 28);
+    	EXPECT_EQ(container->at(1)->evaluate(), 5);
+    	EXPECT_EQ(container->at(2)->evaluate(), 4);
+
+    	container->set_sort_function(new SelectionSort());
+    	container->sort();
+
+    	ASSERT_EQ(container->size(), 3);
+    	EXPECT_EQ(container->at(0)->evaluate(), 4);
+    	EXPECT_EQ(container->at(1)->evaluate(), 5);
+    	EXPECT_EQ(container->at(2)->evaluate(), 28);
+
+}
+TEST(VectorContainerTest, SelectionSortPt2){
+	Op* one = new Op(1);
+	Op* two = new Op(2);
+	Op* three = new Op(3);
+	Op* four = new Op(4);
+	Op* five = new Op(5);
+	Op* six = new Op(6);
+	Op* seven = new Op(7);
+	Op* eight = new Op(8);
+	Op* nine = new Op(9);
+	Op* ten = new Op(10);
+	Op* zero = new Op(0);
+	
+	VectorContainer* container = new VectorContainer();
+	container->add_element(four);
+        container->add_element(two);
+        container->add_element(three);
+        container->add_element(one);
+        container->add_element(zero);
+        container->add_element(ten);
+        container->add_element(eight);
+        container->add_element(nine);
+        container->add_element(two);
+        container->add_element(five);
+        container->add_element(seven);
+        container->add_element(ten);
+
+        ASSERT_EQ(container->size(), 12);
+        EXPECT_EQ(container->at(0)->evaluate(), 4);
+        EXPECT_EQ(container->at(1)->evaluate(), 2);
+        EXPECT_EQ(container->at(2)->evaluate(), 3);
+	EXPECT_EQ(container->at(3)->evaluate(), 1);
+        EXPECT_EQ(container->at(4)->evaluate(), 0);
+        EXPECT_EQ(container->at(5)->evaluate(), 10);
+        EXPECT_EQ(container->at(6)->evaluate(), 8);
+        EXPECT_EQ(container->at(7)->evaluate(), 9);
+        EXPECT_EQ(container->at(8)->evaluate(), 2);
+        EXPECT_EQ(container->at(9)->evaluate(), 5);
+        EXPECT_EQ(container->at(10)->evaluate(), 7);
+        EXPECT_EQ(container->at(11)->evaluate(), 10);
+
+	container->set_sort_function(new SelectionSort());
+	container->sort();
+
+        ASSERT_EQ(container->size(), 12);
+        EXPECT_EQ(container->at(0)->evaluate(), 0);
+        EXPECT_EQ(container->at(1)->evaluate(), 1);
+        EXPECT_EQ(container->at(2)->evaluate(), 2);
+        EXPECT_EQ(container->at(3)->evaluate(), 2);
+        EXPECT_EQ(container->at(4)->evaluate(), 3);
+        EXPECT_EQ(container->at(5)->evaluate(), 4);
+        EXPECT_EQ(container->at(6)->evaluate(), 5);
+        EXPECT_EQ(container->at(7)->evaluate(), 7);
+        EXPECT_EQ(container->at(8)->evaluate(), 8);
+        EXPECT_EQ(container->at(9)->evaluate(), 9);
+        EXPECT_EQ(container->at(10)->evaluate(), 10);
+        EXPECT_EQ(container->at(11)->evaluate(), 10);	
+}
+
+TEST(VectorContainerTest, SelectionSortpt3){
+        Op* eight = new Op(8);
+        Op* four = new Op(4);
+        Div* TreeA = new Div(eight, four);
+
+        Op* three = new Op(3);
+        Op* two = new Op(2);
+        Add* TreeB = new Add(three, two);
+
+        Op* ten = new Op(10);
+        Op* six = new Op(6);
+        Mult* TreeC = new Mult(ten, six);
+	
+	Op* five = new Op(5);
+	Op* one = new Op(1);
+	Sub* TreeD = new Sub(five,one);
+
+
+
+        VectorContainer* container = new VectorContainer();
+        container->add_element(TreeA);
+        container->add_element(TreeB);
+        container->add_element(TreeC);
+	container->add_element(TreeD);
+
+        ASSERT_EQ(container->size(), 4);
+        EXPECT_EQ(container->at(0)->evaluate(), 2);
+        EXPECT_EQ(container->at(1)->evaluate(), 5);
+        EXPECT_EQ(container->at(2)->evaluate(), 60);
+	EXPECT_EQ(container->at(3)->evaluate(),4);
+
+
+        container->set_sort_function(new SelectionSort());
+        container->sort();
+
+        ASSERT_EQ(container->size(), 4);
+        EXPECT_EQ(container->at(0)->evaluate(), 2);
+        EXPECT_EQ(container->at(1)->evaluate(), 4);
+        EXPECT_EQ(container->at(2)->evaluate(), 5);
+	EXPECT_EQ(container->at(3)->evaluate(), 60);
+
+}
+TEST(VectorContainerTest, SelectionSortpt4){
+        Op* eight = new Op(8);
+        Op* four = new Op(4);
+        Div* TreeA = new Div(eight, four);
+
+        Op* three = new Op(3);
+        Op* two = new Op(2);
+        Add* TreeB = new Add(three, two);
+
+        Op* ten = new Op(10);
+        Op* six = new Op(6);
+        Mult* TreeC = new Mult(ten, six);
+
+        Op* five = new Op(5);
+        Op* one = new Op(1);
+        Sub* TreeD = new Sub(five,one);
+
+	Op* twentytwo = new Op(22);
+	Op* hunderedten = new Op(110);
+	Add* TreeE = new Add (twentytwo,hunderedten);
+
+	Pow* TreeF = new Pow (two,five);
+	Sub* TreeG = new Sub (TreeE,TreeF);
+
+
+        VectorContainer* container = new VectorContainer();
+        container->add_element(TreeA);
+        container->add_element(TreeB);
+        container->add_element(TreeC);
+        container->add_element(TreeD);
+	container->add_element(TreeE);
+	container->add_element(TreeF);
+	container->add_element(TreeG);
+
+        ASSERT_EQ(container->size(), 7);
+        EXPECT_EQ(container->at(0)->evaluate(), 2);
+        EXPECT_EQ(container->at(1)->evaluate(), 5);
+        EXPECT_EQ(container->at(2)->evaluate(), 60);
+        EXPECT_EQ(container->at(3)->evaluate(),4);
+	EXPECT_EQ(container->at(4)->evaluate(),132);
+	EXPECT_EQ(container->at(5)->evaluate(),32);
+	EXPECT_EQ(container->at(6)->evaluate(),100);
+
+
+        container->set_sort_function(new SelectionSort());
+        container->sort();
+
+        ASSERT_EQ(container->size(), 7);
+        EXPECT_EQ(container->at(0)->evaluate(), 2);
+        EXPECT_EQ(container->at(1)->evaluate(), 4);
+        EXPECT_EQ(container->at(2)->evaluate(), 5);
+        EXPECT_EQ(container->at(3)->evaluate(), 32);
+	EXPECT_EQ(container->at(4)->evaluate(),60);
+	EXPECT_EQ(container->at(5)->evaluate(),100);
+	EXPECT_EQ(container->at(6)->evaluate(),132);
+
+}
+
+
 
 
 int main(int argc, char **argv) {
