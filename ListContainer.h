@@ -35,17 +35,28 @@ class ListContainer : public Container {
 
 		void swap(int i, int j)
 		{
+
+			
 			list<Base*>::iterator it = L.begin();
 			list<Base*>::iterator it2 = L.begin();
+				
 
+			
 			advance(it, i);
 			advance(it2, j);
-
+				
+			std::swap(it, it2); 
+			/*	
+		
+			cout << " PRE SWAP \n" <<  it->evaluate();
+			cout << endl << it2->evaluate() << endl;
 			list<Base*>::iterator temp = it;
-
-			it = it2;
-			it2 = temp;
 			
+			*it = *it2;
+			*it2 = *temp;
+			cout << " POST SWAP \n" << *it->evaluate();
+                        cout << endl << *it2->evaluate() << endl;
+			*/
 
 		};
 		
