@@ -17,18 +17,17 @@ void sort(Container* container)
 	int i, j, flag = 1;
 	int numLength = container->size();
 
-	for(i = 1; i < (numLength - 1) && flag; i++)
-	{
-	
-	flag = 0;
-	for(j=0; j < (numLength - 1); j++)
-	{
-		if(container->at(j+1)->evaluate()  <  container->at(j)->evaluate())
-		{
-			container->swap(j, j+1);
-			flag = 1;		
-		 }
-	}
+	for(i = 1;( i <= numLength-1 ) && flag; i++)
+	{	
+		flag = 0;
+		for(j=0; j < (numLength - 1); j++)
+		{	
+			if(container->at(j+1)->evaluate()  <  container->at(j)->evaluate())
+			{
+				container->swap(j, j+1);
+				flag = 1;		
+		 	}
+		}
 	}
 };
 
