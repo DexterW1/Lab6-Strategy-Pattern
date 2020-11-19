@@ -11,7 +11,7 @@ using namespace std;
 
 class VectorContainer : public Container {
 
-	protected:
+	private:
 		vector <Base*> vcontainer;
 	public:
 		VectorContainer() : Container () {};
@@ -20,7 +20,7 @@ class VectorContainer : public Container {
 		void print(){
 			vector <Base*> print = vcontainer;
 			for(int i=0; i<vcontainer.size(); i++){
-				cout<< print[i]->evaluate();
+				cout<< print[i]->evaluate()<<"->";
 			}
 		};
 
