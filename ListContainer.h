@@ -19,11 +19,9 @@ class ListContainer : public Container {
 		ListContainer(Sort* s) : Container(s) {};
 	
 		void print(){
-			
-
 			list <Base*> :: iterator it;
 			for(it = L.begin(); it != L.end(); ++it) {
-			        cout << '\t' << *it;
+			        cout << (*it)->evaluate()<< "->";
 			}	
 		};
 
@@ -37,15 +35,15 @@ class ListContainer : public Container {
 		{
 
 			
-			list<Base*>::iterator it = L.begin();
-			list<Base*>::iterator it2 = L.begin();
+			std::list<Base*>::iterator it = L.begin();
+			std::list<Base*>::iterator it2 = L.begin();
 				
 
 			
-			advance(it, i);
-			advance(it2, j);
+			std::advance(it, i);
+			std::advance(it2, j);
 				
-			std::swap(it, it2); 
+			std::swap(*it, *it2); 
 			/*	
 		
 			cout << " PRE SWAP \n" <<  it->evaluate();
